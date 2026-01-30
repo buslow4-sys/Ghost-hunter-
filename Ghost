@@ -1,0 +1,167 @@
+--[[
+    GHOST PRIVATE v12.3
+    STABLE BUILD: OBFUSCATED LAYER
+]]
+
+local _0x5F = function(d) local r = "" for i = 1, #d do r = r .. string.char(string.byte(d, i) - 1) end return r end
+
+-- [ OBFUSCATED CORE ]
+local _LPH_CORE = [[
+local _0xL = function(_0x73) local _0x64 = "" for _0x69 = 1, #_0x73 do _0x64 = _0x64 .. string.char(string.byte(_0x73, _0x69) - 1) end return _0x64 end
+local _RUN = loadstring; local _GET = game.HttpGet;
+
+local SG = Instance.new("ScreenGui", game:GetService("CoreGui"))
+local MF = Instance.new("Frame", SG)
+MF.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+MF.Position = UDim2.new(0.5, -110, 0.5, -45)
+MF.Size = UDim2.new(0, 220, 0, 90)
+Instance.new("UICorner", MF).CornerRadius = UDim.new(0, 9)
+
+local T = Instance.new("TextLabel", MF)
+T.Text = "GHOST PRIVATE"; T.Size = UDim2.new(1, 0, 0.4, 0); T.TextColor3 = Color3.new(0.9, 0.9, 0.9); T.Font = "GothamBold"; T.BackgroundTransparency = 1
+
+local B = Instance.new("Frame", MF)
+B.BackgroundColor3 = Color3.fromRGB(25, 25, 25); B.Position = UDim2.new(0.1, 0, 0.6, 0); B.Size = UDim2.new(0.8, 0, 0, 2); B.BorderSizePixel = 0
+local Bar = Instance.new("Frame", B)
+Bar.BackgroundColor3 = Color3.fromRGB(150, 0, 255); Bar.Size = UDim2.new(0, 0, 1, 0); Bar.BorderSizePixel = 0
+
+Bar:TweenSize(UDim2.new(1, 0, 1, 0), "Out", "Quad", 1.5)
+task.wait(1.6)
+
+T.Text = ";)" 
+local SubT = Instance.new("TextLabel", MF)
+SubT.Text = "just for fun"; SubT.Size = UDim2.new(1, 0, 0.2, 0); SubT.Position = UDim2.new(0, 0, 0.7, 0); SubT.TextColor3 = Color3.fromRGB(150, 0, 255); SubT.Font = "Gotham"; SubT.BackgroundTransparency = 1; SubT.TextSize = 10
+
+task.spawn(function()
+    for i = 1, 3 do
+        T.Text = ";)"
+        task.wait(0.3)
+        T.Text = ":)"
+        task.wait(0.3)
+    end
+end)
+
+task.wait(1.5)
+MF:TweenPosition(UDim2.new(0.5, -110, 1.2, 0), "In", "Back", 0.5)
+task.wait(0.5); SG:Destroy()
+
+local _M = getrawmetatable(game); local _I = _M.__index; setreadonly(_M, false)
+_M.__index = newcclosure(function(s, k)
+    if not checkcaller() and k == "Size" and (s.Name == "Head" or s.Name == "HumanoidRootPart") then
+        return (s.Name == "Head" and Vector3.new(1,1,1) or Vector3.new(2,2,1))
+    end
+    return _I(s, k)
+end)
+setreadonly(_M, true)
+
+local Fluent = _RUN(_GET(game, "https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local W = Fluent:CreateWindow({ Title = "TRIDENT HUB | GHOST", SubTitle = "v12.3 Stable", TabWidth = 160, Size = UDim2.fromOffset(450, 450), Acrylic = false, Theme = "Dark" })
+
+local _C = { Chams = false, Boxes = false, Dist = false, Ore = false, OMax = 1000, HSize = 1, HPart = "Head", FB = false, Brvl = 2, C_Chams = Color3.fromRGB(150, 0, 255), C_Boxes = Color3.new(1, 1, 1) }
+local _AV = {}; local _OV = {};
+local Cam = workspace.CurrentCamera
+local LP = game.Players.LocalPlayer
+local Light = game:GetService("Lighting")
+
+local Tbs = { 
+    V = W:AddTab({ Title = "Visuals", Icon = "eye" }), 
+    C = W:AddTab({ Title = "Combat", Icon = "crosshair" }),
+    M = W:AddTab({ Title = "Misc", Icon = "plus-circle" }) 
+}
+
+Tbs.V:AddToggle("Ch", {Title = "Чамсы", Default = false}):OnChanged(function(v) _C.Chams = v end)
+Tbs.V:AddColorpicker("ChCP", {Title = "Цвет Чамсов", Default = _C.C_Chams}):OnChanged(function(v) _C.C_Chams = v end)
+Tbs.V:AddToggle("Bx", {Title = "Боксы", Default = false}):OnChanged(function(v) _C.Boxes = v end)
+Tbs.V:AddColorpicker("BxCP", {Title = "Цвет Боксов", Default = _C.C_Boxes}):OnChanged(function(v) _C.C_Boxes = v end)
+Tbs.V:AddToggle("Ds", {Title = "Дистанция", Default = false}):OnChanged(function(v) _C.Dist = v end)
+Tbs.V:AddToggle("Or", {Title = "Resource ESP", Default = false}):OnChanged(function(v) _C.Ore = v end)
+Tbs.V:AddSlider("Om", {Title = "Ore Distance", Default = 1000, Min = 100, Max = 5000, Rounding = 0, Callback = function(v) _C.OMax = v end})
+
+Tbs.C:AddDropdown("Pt", {Title = "Цель", Values = {"Head", "HumanoidRootPart"}, CurrentValue = "Head", Callback = function(v) _C.HPart = v end})
+Tbs.C:AddSlider("Sz", {Title = "Hitbox Size", Default = 1, Min = 1, Max = 15, Rounding = 1, Callback = function(v) _C.HSize = v end})
+
+Tbs.M:AddToggle("Fb", {Title = "Full Bright", Default = false}):OnChanged(function(v) 
+    _C.FB = v 
+    if not v then Light.Ambient = Color3.fromRGB(127,127,127); Light.Brightness = 1; Light.GlobalShadows = true end
+end)
+Tbs.M:AddSlider("Br", {Title = "Яркость", Default = 2, Min = 1, Max = 10, Rounding = 1, Callback = function(v) _C.Brvl = v end})
+
+local function _GOD(o)
+    local n = o.Name:lower()
+    if n:find("nitrate") then return {Name = "NITRATE", Color = Color3.new(1,1,1)}
+    elseif n:find("sulfur") then return {Name = "SULFUR", Color = Color3.new(1,1,0)}
+    elseif n:find("iron") or n:find("metal") then return {Name = "METAL", Color = Color3.fromRGB(255,170,80)}
+    elseif n:find("stone") then return {Name = "STONE", Color = Color3.fromRGB(140,140,140)}
+    end return {Name = "ORE", Color = Color3.new(0.7,0.7,0.7)}
+end
+
+local function _CESP(m, isO, d)
+    local v = {}
+    if not isO then
+        v.b = Drawing.new("Square"); v.b.Thickness = 1; v.b.Filled = false; v.b.Color = _C.C_Boxes
+        v.t = Drawing.new("Text"); v.t.Size = 14; v.t.Outline = true; v.t.Center = true; v.t.Color = Color3.new(1,1,1)
+        v.h = Instance.new("Highlight", m); v.h.FillColor = _C.C_Chams
+    else
+        v.t = Drawing.new("Text"); v.t.Size = 13; v.t.Outline = true; v.t.Center = true; v.t.Color = d.Color
+        v.h = Instance.new("Highlight", m); v.h.FillColor = d.Color
+    end
+    return v
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if _C.FB then Light.Ambient = Color3.new(1,1,1); Light.Brightness = _C.Brvl; Light.GlobalShadows = false end
+    local pf, of = {}, {}
+    local function process(obj)
+        if obj:IsA("Model") and obj ~= LP.Character and obj:FindFirstChild("HumanoidRootPart") then
+            pf[obj] = true
+            local vis = _AV[obj] or _CESP(obj, false)
+            _AV[obj] = vis
+            local pos, on = Cam:WorldToViewportPoint(obj.HumanoidRootPart.Position)
+            if vis.h then vis.h.Enabled = _C.Chams; vis.h.FillColor = _C.C_Chams end
+            if on then
+                local d = (Cam.CFrame.Position - obj.HumanoidRootPart.Position).Magnitude
+                local h = 2200 / d
+                vis.b.Visible = _C.Boxes; vis.b.Color = _C.C_Boxes; vis.b.Size = Vector2.new(h/1.5, h); vis.b.Position = Vector2.new(pos.X - h/3, pos.Y - h/2)
+                vis.t.Visible = _C.Dist; vis.t.Text = math.floor(d).."m"; vis.t.Position = Vector2.new(pos.X, pos.Y + h/2)
+            else vis.b.Visible = false; vis.t.Visible = false end
+        elseif _C.Ore then
+            local mesh = obj:IsA("MeshPart") and obj or obj:FindFirstChildWhichIsA("MeshPart", true)
+            if mesh and (mesh.MeshId:find("12939036056") or obj.Name:lower():find("ore") or obj.Name:lower():find("node")) then
+                local d = (Cam.CFrame.Position - mesh.Position).Magnitude
+                if d <= _C.OMax then
+                    of[obj] = true
+                    local data = _GOD(obj)
+                    local vis = _OV[obj] or _CESP(obj, true, data)
+                    _OV[obj] = vis
+                    local pos, on = Cam:WorldToViewportPoint(mesh.Position)
+                    if vis.h then vis.h.Enabled = true end
+                    if on then vis.t.Visible = true; vis.t.Text = "["..data.Name.."]\n"..math.floor(d).."m"; vis.t.Position = Vector2.new(pos.X, pos.Y)
+                    else vis.t.Visible = false end
+                end
+            end
+        end
+    end
+    for _, v in pairs(workspace:GetChildren()) do process(v) end
+    local res = workspace:FindFirstChild("Resources")
+    if res then for _, v in pairs(res:GetChildren()) do process(v) end end
+    for m, v in pairs(_AV) do if not pf[m] or not m.Parent then v.b:Remove(); v.t:Remove(); v.h:Destroy(); _AV[m] = nil end end
+    for m, v in pairs(_OV) do if not of[m] or not m.Parent or not _C.Ore then v.t:Remove(); v.h:Destroy(); _OV[m] = nil end end
+end)
+
+game:GetService("RunService").Heartbeat:Connect(function()
+    for _, v in pairs(workspace:GetChildren()) do
+        if v:IsA("Model") and v ~= LP.Character then
+            local p = v:FindFirstChild(_C.HPart)
+            if p and p:IsA("BasePart") then
+                p.Size = _C.HSize > 1 and Vector3.new(_C.HSize,_C.HSize,_C.HSize) or (p.Name == "Head" and Vector3.new(1,1,1) or Vector3.new(2,2,1))
+                p.Transparency = _C.HSize > 1 and 0.6 or 0
+                p.CanCollide = false
+            end
+        end
+    end
+end)
+
+Fluent:Notify({Title = "GHOST PRIVATE", Content = "v12.3 Stable Loaded", Duration = 5})
+]]
+
+loadstring(_LPH_CORE)()
